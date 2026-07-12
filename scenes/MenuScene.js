@@ -33,7 +33,7 @@ class MenuScene extends Phaser.Scene {
       .setDisplaySize(PLAYER_HEAD_DIAMETER * 2.2, PLAYER_HEAD_DIAMETER * 2.2);
 
     this.add
-      .text(width / 2, height / 2 - 150, "EL CAGÓN MARLON", {
+      .text(width / 2, height / 2 - 150, "SUPER MARLON CAGÓN", {
         fontFamily: "Comic Sans MS, sans-serif",
         fontSize: "48px",
         color: "#ffffff",

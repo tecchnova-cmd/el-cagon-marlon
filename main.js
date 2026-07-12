@@ -1,4 +1,4 @@
-// Configuración principal del juego "El Cagón Marlon"
+// Configuración principal del juego "Super Marlon Cagón"
 
 const config = {
   type: Phaser.AUTO,

@@ -18,7 +18,7 @@ class IntroScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#241a1f");
 
     this.add
-      .text(width / 2, 34, "EL CAGÓN MARLON", {
+      .text(width / 2, 34, "SUPER MARLON CAGÓN", {
         fontFamily: "Comic Sans MS, sans-serif",
         fontSize: "32px",
         color: "#ffd93d",

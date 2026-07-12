@@ -14,18 +14,30 @@ function generateGameTextures(scene) {
   const g = scene.make.graphics({ add: false });
 
   // ---------- CUERPO DE MARLON (chibi: corto; la cara real va superpuesta) ----------
+  // Estilo "Super Marlon Cagón": camisa roja debajo, overol azul encima (como Mario).
   g.clear();
-  // piernas (cortas)
-  g.fillStyle(0x2b2b52, 1);
+  // piernas (pantalón del overol, cortas)
+  g.fillStyle(0x3b6fd6, 1);
   g.fillRect(11, 46, 8, 8);
   g.fillRect(21, 46, 8, 8);
+  // cuello de la camisa (se asoma por encima del overol)
+  g.fillStyle(0xd6432b, 1);
+  g.fillRoundedRect(10, 20, 20, 10, 3);
   // torso (overol, corto)
   g.fillStyle(0x3b6fd6, 1);
   g.fillRoundedRect(8, 26, 24, 20, 5);
-  // brazos (pequeños)
-  g.fillStyle(0xf1c27d, 1);
+  // brazos (mangas de la camisa)
+  g.fillStyle(0xd6432b, 1);
   g.fillRoundedRect(2, 28, 6, 14, 3);
   g.fillRoundedRect(32, 28, 6, 14, 3);
+  // tirantes del overol
+  g.fillStyle(0x2b4fa8, 1);
+  g.fillRect(13, 20, 4, 8);
+  g.fillRect(24, 20, 4, 8);
+  // botones del overol
+  g.fillStyle(0xffd93d, 1);
+  g.fillCircle(15, 32, 1.6);
+  g.fillCircle(25, 32, 1.6);
   g.generateTexture("playerBody", 40, 56);
 
   // ---------- POLVO (al saltar/aterrizar) ----------
