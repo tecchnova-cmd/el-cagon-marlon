@@ -39,3 +39,11 @@ const config = {
 };
 
 window.game = new Phaser.Game(config);
+
+// Red de seguridad para móviles (sobre todo Android): al girar el teléfono
+// o cambiar de tamaño de ventana, se fuerza a Phaser a recalcular el tamaño
+// del canvas, por si el navegador no dispara el resize interno a tiempo.
+window.addEventListener("resize", () => window.game.scale.refresh());
+window.addEventListener("orientationchange", () => {
+  setTimeout(() => window.game.scale.refresh(), 100);
+});

@@ -51,12 +51,13 @@ canvas {
   50% { transform: rotate(90deg); }
 }
 
-/* Solo en móviles/tablets táctiles en vertical; no afecta a escritorio. */
+/* Solo en móviles/tablets táctiles en vertical; no afecta a escritorio.
+   #game-container NUNCA se oculta con display:none: el overlay simplemente
+   se dibuja encima (ya cubre toda la pantalla). Si el juego se ocultara con
+   display:none, Phaser lo inicializaría con tamaño 0x0 y algunos navegadores
+   (sobre todo Android) no recalculan bien el tamaño del canvas al girar. */
 @media (orientation: portrait) and (hover: none) and (pointer: coarse) {
   #rotate-overlay {
     display: flex;
-  }
-  #game-container {
-    display: none;
   }
 }
