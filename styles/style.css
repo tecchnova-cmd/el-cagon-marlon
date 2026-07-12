@@ -13,7 +13,12 @@ html, body {
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  height: 100vh; /* respaldo para navegadores sin soporte de dvh */
+  height: 100dvh; /* altura visible real: evita que la barra de direcciones móvil recorte la pantalla */
+  /* deja libres los bordes redondeados/muescas del teléfono en horizontal */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  box-sizing: border-box;
 }
 
 canvas {
