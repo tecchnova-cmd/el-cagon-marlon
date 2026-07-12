@@ -1,0 +1,62 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #1a1a2e;
+  overflow: hidden;
+  font-family: "Comic Sans MS", "Trebuchet MS", sans-serif;
+}
+
+#game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+canvas {
+  image-rendering: pixelated;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+#rotate-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #1a1a2e;
+  color: #ffffff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+#rotate-overlay .icon {
+  font-size: 56px;
+  animation: rotate-hint 1.6s ease-in-out infinite;
+}
+
+#rotate-overlay p {
+  font-size: 18px;
+  margin-top: 16px;
+  max-width: 280px;
+}
+
+@keyframes rotate-hint {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(90deg); }
+}
+
+/* Solo en móviles/tablets táctiles en vertical; no afecta a escritorio. */
+@media (orientation: portrait) and (hover: none) and (pointer: coarse) {
+  #rotate-overlay {
+    display: flex;
+  }
+  #game-container {
+    display: none;
+  }
+}
