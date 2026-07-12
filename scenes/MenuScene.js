@@ -87,7 +87,10 @@ class MenuScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
     btn.on("pointerover", () => btn.setScale(1.06));
     btn.on("pointerout", () => btn.setScale(1));
-    btn.on("pointerdown", onClick);
+    btn.on("pointerdown", () => {
+      requestFullscreenIfMobile(this);
+      onClick();
+    });
     return btn;
   }
 

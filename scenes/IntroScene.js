@@ -69,7 +69,10 @@ class IntroScene extends Phaser.Scene {
 
     startButton.on("pointerover", () => startButton.setScale(1.06));
     startButton.on("pointerout", () => startButton.setScale(1));
-    startButton.on("pointerdown", () => this.scene.start("MenuScene"));
+    startButton.on("pointerdown", () => {
+      requestFullscreenIfMobile(this);
+      this.scene.start("MenuScene");
+    });
 
     this.input.keyboard.once("keydown-SPACE", () => this.scene.start("MenuScene"));
     this.input.keyboard.once("keydown-ENTER", () => this.scene.start("MenuScene"));

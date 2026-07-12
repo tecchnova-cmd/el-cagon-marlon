@@ -18,6 +18,20 @@ const DEFEAT_PHRASES = [
   "¡Directo al inodoro!",
 ];
 
+// En móvil, pide pantalla completa real (oculta la barra de direcciones) en
+// el primer toque del jugador. Los navegadores exigen que sea un gesto
+// directo del usuario, así que solo se llama desde un pointerdown/click.
+function requestFullscreenIfMobile(scene) {
+  const isTouch = scene.sys.game.device.input.touch;
+  if (!isTouch || scene.scale.isFullscreen) return;
+  try {
+    scene.scale.startFullscreen();
+  } catch (e) {
+    // Algunos navegadores lo bloquean (o ya no hace falta); el juego sigue
+    // funcionando igual, solo sin pantalla completa.
+  }
+}
+
 function trackCoinCollected(scene) {
   scene.registry.set("coinsCollected", (scene.registry.get("coinsCollected") || 0) + 1);
   scene.registry.set("coinsWallet", (scene.registry.get("coinsWallet") || 0) + 1);
