@@ -335,6 +335,22 @@ function playDistantFlush() {
   osc.stop(t0 + 0.85);
 }
 
+// Campanada metálica (campanas del castillo, con un toque de tubería).
+function playBellChime() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 480, slideTo: 440, duration: 0.6, type: "triangle", volume: 0.1 });
+  playTone(ctx, { freq: 720, slideTo: 680, duration: 0.5, type: "sine", volume: 0.06, delay: 0.02 });
+}
+
+// Trueno/relámpago corto (chasquido agudo + retumbo grave).
+function playThunderCrack() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 2200, duration: 0.04, type: "square", volume: 0.05 });
+  playTone(ctx, { freq: 90, slideTo: 40, duration: 0.5, type: "sawtooth", volume: 0.14, delay: 0.03 });
+}
+
 // Acorde sostenido (para música ambiental / de nivel). Devuelve un handle
 // con stop() para poder detenerlo o cambiarlo por otro (crossfade manual).
 function startChordPad(freqs, volume = 0.05) {

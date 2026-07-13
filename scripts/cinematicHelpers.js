@@ -262,6 +262,56 @@ function showScreenText(scene, x, y, lines, durationMs, options) {
   return items;
 }
 
+// Texturas exclusivas de la cinemática del Castillo (Nivel 5). Guardadas
+// aparte por el mismo motivo que las anteriores generateXCinematicTextures:
+// su propia guardia evita que un early-return de otra función se salte estas.
+function generateCastleCinematicTextures(scene) {
+  if (scene.textures.exists("cineBossSilhouette")) return;
+
+  const g = scene.make.graphics({ add: false });
+
+  // ---------- SILUETA GRANDE DEL JEFE (parcial, al fondo de un pasillo) ----------
+  g.clear();
+  // brazos de tubería
+  g.fillStyle(0x05070a, 0.94);
+  g.fillRoundedRect(4, 60, 18, 60, 6);
+  g.fillRoundedRect(118, 60, 18, 60, 6);
+  // tanque
+  g.fillRoundedRect(38, 6, 64, 40, 8);
+  // taza (cuerpo principal)
+  g.fillRoundedRect(20, 46, 100, 90, 22);
+  // tapa entreabierta, como una boca
+  g.fillStyle(0x090c10, 0.96);
+  g.fillEllipse(70, 70, 70, 26);
+  // corona
+  g.fillStyle(0xffd93d, 0.85);
+  g.fillTriangle(38, 6, 50, -22, 62, 6);
+  g.fillTriangle(62, 6, 70, -30, 78, 6);
+  g.fillTriangle(78, 6, 90, -22, 102, 6);
+  g.fillRect(36, 2, 68, 8);
+  // ojos rojos
+  g.fillStyle(0xff2e2e, 0.95);
+  g.fillEllipse(52, 74, 14, 10);
+  g.fillEllipse(88, 74, 14, 10);
+  g.generateTexture("cineBossSilhouette", 140, 160);
+
+  // ---------- RELÁMPAGO VERDE ----------
+  g.clear();
+  g.lineStyle(3, 0x9be86b, 0.9);
+  g.beginPath();
+  g.moveTo(10, 0);
+  g.lineTo(2, 22);
+  g.lineTo(12, 22);
+  g.lineTo(0, 50);
+  g.lineTo(16, 24);
+  g.lineTo(6, 24);
+  g.lineTo(16, 0);
+  g.strokePath();
+  g.generateTexture("cineLightning", 20, 50);
+
+  g.destroy();
+}
+
 // ---------- BARRAS DE CINE ----------
 function showLetterboxBars(scene) {
   const { width, height } = scene.scale;

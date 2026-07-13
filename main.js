@@ -32,6 +32,7 @@ const config = {
     ToxicForestScene,
     LaboratoryIntroCinematic,
     LaboratoryScene,
+    CastleIntroCinematic,
     CastleScene,
     FinalBossScene,
     UpgradeScene,

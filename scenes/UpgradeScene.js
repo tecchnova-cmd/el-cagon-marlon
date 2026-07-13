@@ -191,6 +191,8 @@ class UpgradeScene extends Phaser.Scene {
       this.scene.start("ToxicForestIntroCinematic", { nextScene: "ToxicForestScene" });
     } else if (this.nextScene === "LaboratoryScene" && !this.save.laboratoryIntroSeen) {
       this.scene.start("LaboratoryIntroCinematic", { nextScene: "LaboratoryScene" });
+    } else if (this.nextScene === "CastleScene" && !this.save.castleIntroSeen) {
+      this.scene.start("CastleIntroCinematic", { nextScene: "CastleScene" });
     } else {
       this.scene.start(this.nextScene);
     }
