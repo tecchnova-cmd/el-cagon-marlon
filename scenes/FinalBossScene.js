@@ -329,6 +329,20 @@ class FinalBossScene extends Phaser.Scene {
   triggerBossDefeatSequence(boss) {
     this.isRoundOver = true;
 
+    // Quinto impacto: detener ataques y proyectiles peligrosos de inmediato,
+    // y congelar/eliminar cualquier miniinodoro invocado, sin tocar las
+    // reglas de la batalla en sí (el jefe ya está "defeated").
+    this.bossWaterJets.clear(true, true);
+    this.ceilingDrops.clear(true, true);
+    this.bossWaves.clear(true, true);
+    this.groundEnemies.children.each((enemy) => {
+      if (enemy !== boss && enemy.active) enemy.destroy();
+    });
+
+    // Ocultar el HUD gradualmente.
+    const hudElements = [this.scoreText, this.levelText, this.bottleText, this.comboText, ...this.hearts, ...this.bossHealthSegments];
+    this.tweens.add({ targets: hudElements, alpha: 0, duration: 900 });
+
     this.cameras.main.shake(500, 0.012);
     this.tweens.add({ targets: boss, angle: 360, duration: 900, repeat: 1 });
 
@@ -347,31 +361,19 @@ class FinalBossScene extends Phaser.Scene {
         duration: 800,
         onComplete: () => {
           boss.destroy();
-          this.showVictoryMessage();
+          this.goToVictoryCinematic();
         },
       });
     });
   }
 
-  showVictoryMessage() {
-    const { width, height } = this.scale;
-    this.add
-      .text(width / 2, height / 2, "¡EL REY MALOLIENTE HA SIDO DERROTADO!", {
-        fontFamily: "Comic Sans MS, sans-serif",
-        fontSize: "26px",
-        color: "#ffd93d",
-        stroke: "#2b2b52",
-        strokeThickness: 6,
-        align: "center",
-        wordWrap: { width: width - 60 },
-      })
-      .setOrigin(0.5)
-      .setScrollFactor(0)
-      .setDepth(20);
-
+  // Tras el 5º impacto, la narrativa (colapso, corona, celebración, pantalla
+  // de resultados) continúa en su propia cinemática; ver
+  // scenes/FinalBossVictoryCinematic.js.
+  goToVictoryCinematic() {
     const score = this.registry.get("score");
-    this.time.delayedCall(2500, () => {
-      this.scene.start("VictoryScene", { score });
+    this.time.delayedCall(300, () => {
+      this.scene.start("FinalBossVictoryCinematic", { score });
     });
   }
 

@@ -67,6 +67,7 @@ function awardEnemyDefeat(scene, x, y, points) {
 
   scene.addScore(points * scene.comboCount);
   scene.registry.set("enemiesDefeated", (scene.registry.get("enemiesDefeated") || 0) + 1);
+  scene.registry.set("bestCombo", Math.max(scene.registry.get("bestCombo") || 0, scene.comboCount));
 
   if (scene.comboText) {
     scene.comboText.setText(scene.comboCount > 1 ? "Combo x" + scene.comboCount : "");

@@ -34,12 +34,15 @@ const config = {
     LaboratoryScene,
     CastleIntroCinematic,
     CastleScene,
+    FinalBossIntroCinematic,
     FinalBossScene,
+    FinalBossVictoryCinematic,
     UpgradeScene,
     PauseMenuScene,
     GameOverScene,
     LevelCompleteScene,
     VictoryScene,
+    CreditsScene,
   ],
 };
 

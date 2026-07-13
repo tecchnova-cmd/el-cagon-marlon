@@ -151,6 +151,9 @@ class MenuScene extends Phaser.Scene {
     this.registry.set("lives", 3);
     this.registry.set("coinsCollected", 0);
     this.registry.set("enemiesDefeated", 0);
+    this.registry.set("bottlesUsed", 0);
+    this.registry.set("deathCount", 0);
+    this.registry.set("bestCombo", 0);
     this.registry.set("runStartTime", Date.now());
     this.registry.set("coinsWallet", coinsWallet);
   }
@@ -165,6 +168,9 @@ class MenuScene extends Phaser.Scene {
     this.registry.set("lives", 3);
     this.registry.set("coinsCollected", 0);
     this.registry.set("enemiesDefeated", 0);
+    this.registry.set("bottlesUsed", 0);
+    this.registry.set("deathCount", 0);
+    this.registry.set("bestCombo", 0);
     this.registry.set("runStartTime", Date.now());
     this.registry.set("coinsWallet", save.coins);
     this.scene.start(save.currentScene || "CityScene");

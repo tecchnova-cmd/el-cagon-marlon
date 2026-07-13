@@ -351,6 +351,37 @@ function playThunderCrack() {
   playTone(ctx, { freq: 90, slideTo: 40, duration: 0.5, type: "sawtooth", volume: 0.14, delay: 0.03 });
 }
 
+// Succión (el Rey Maloliente siendo absorbido por su propia descarga).
+function playSuctionSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const source = ctx.createBufferSource();
+  source.buffer = createNoiseBuffer(ctx, 1.2);
+  const filter = ctx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(1200, ctx.currentTime);
+  filter.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 1.1);
+  const gain = ctx.createGain();
+  const t0 = ctx.currentTime;
+  gain.gain.setValueAtTime(0.001, t0);
+  gain.gain.exponentialRampToValueAtTime(0.13, t0 + 0.2);
+  gain.gain.exponentialRampToValueAtTime(0.001, t0 + 1.2);
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+  source.start(t0);
+  source.stop(t0 + 1.25);
+}
+
+// Pequeño "pop" festivo (confeti / celebración).
+function playPartyPop() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 660, duration: 0.08, type: "square", volume: 0.09 });
+  playTone(ctx, { freq: 880, duration: 0.1, type: "square", volume: 0.08, delay: 0.06 });
+  playTone(ctx, { freq: 1100, duration: 0.12, type: "square", volume: 0.07, delay: 0.12 });
+}
+
 // Acorde sostenido (para música ambiental / de nivel). Devuelve un handle
 // con stop() para poder detenerlo o cambiarlo por otro (crossfade manual).
 function startChordPad(freqs, volume = 0.05) {

@@ -17,6 +17,9 @@ function getDefaultSave() {
     forestIntroSeen: false, // evita repetir la cinemática del Nivel 3 en la misma partida
     laboratoryIntroSeen: false, // evita repetir la cinemática del Nivel 4 en la misma partida
     castleIntroSeen: false, // evita repetir la cinemática del Nivel 5 en la misma partida
+    finalBossIntroSeen: false, // evita repetir la cinemática previa a la batalla final en la misma partida
+    finalVictorySeen: false, // registro de que la cinemática final de victoria ya se reprodujo
+    gameCompleted: false, // el jugador derrotó al Rey Maloliente al menos una vez
   };
 }
 

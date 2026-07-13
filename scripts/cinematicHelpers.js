@@ -312,6 +312,60 @@ function generateCastleCinematicTextures(scene) {
   g.destroy();
 }
 
+// Texturas exclusivas de las cinemáticas del Nivel 6 (intro y victoria de la
+// batalla final). Guardadas aparte por el mismo motivo que las anteriores
+// generateXCinematicTextures.
+function generateFinalBossCinematicTextures(scene) {
+  if (scene.textures.exists("cineCrown")) return;
+
+  const g = scene.make.graphics({ add: false });
+
+  // ---------- CORONA (para el trono, y luego para Marlon) ----------
+  g.clear();
+  g.fillStyle(0xffd93d, 1);
+  g.fillTriangle(4, 30, 16, 2, 28, 30);
+  g.fillTriangle(20, 30, 32, 2, 44, 30);
+  g.fillTriangle(36, 30, 48, 2, 60, 30);
+  g.fillRect(2, 26, 60, 10);
+  g.fillStyle(0xe63946, 1);
+  g.fillCircle(16, 12, 3);
+  g.fillCircle(32, 8, 3);
+  g.fillCircle(48, 12, 3);
+  g.generateTexture("cineCrown", 64, 38);
+
+  // ---------- CAPA REAL RIDÍCULA ----------
+  g.clear();
+  g.fillStyle(0x8a1f2d, 0.92);
+  g.fillTriangle(0, 0, 70, 0, 35, 90);
+  g.fillStyle(0xffd93d, 0.6);
+  g.fillRect(0, 0, 70, 8);
+  g.generateTexture("cineCape", 70, 90);
+
+  // ---------- MEDALLA ----------
+  g.clear();
+  g.fillStyle(0xffd93d, 0.95);
+  g.fillCircle(9, 9, 8);
+  g.fillStyle(0xe63946, 0.9);
+  g.fillCircle(9, 9, 4);
+  g.generateTexture("cineMedal", 18, 18);
+
+  // ---------- CHISPA DE FUEGO ARTIFICIAL ----------
+  g.clear();
+  const colors = [0x9be86b, 0xffd93d];
+  colors.forEach((c, i) => {
+    g.fillStyle(c, 0.9);
+    g.fillCircle(7, 7, 3);
+  });
+  g.lineStyle(2, 0xffffff, 0.7);
+  for (let a = 0; a < 360; a += 60) {
+    const rad = Phaser.Math.DegToRad(a);
+    g.lineBetween(7, 7, 7 + Math.cos(rad) * 7, 7 + Math.sin(rad) * 7);
+  }
+  g.generateTexture("cineFirework", 14, 14);
+
+  g.destroy();
+}
+
 // ---------- BARRAS DE CINE ----------
 function showLetterboxBars(scene) {
   const { width, height } = scene.scale;

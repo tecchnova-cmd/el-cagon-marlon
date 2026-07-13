@@ -148,6 +148,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     bottle.setVelocity(this.facing * BOTTLE_SPEED_X * this.throwSpeedMultiplier, -BOTTLE_LAUNCH_Y);
     bottle.setAngularVelocity(this.facing * 320);
 
+    this.scene.registry.set("bottlesUsed", (this.scene.registry.get("bottlesUsed") || 0) + 1);
     playGameSound(this.scene, SOUND_KEYS.bottle);
   }
 
@@ -173,6 +174,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   takeHit(knockbackDir) {
     if (this.isInvulnerable) return;
     this.isInvulnerable = true;
+    this.scene.registry.set("deathCount", (this.scene.registry.get("deathCount") || 0) + 1);
 
     this.setVelocity(knockbackDir * 220, -300);
 
