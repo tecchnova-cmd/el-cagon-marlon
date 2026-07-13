@@ -51,6 +51,22 @@ class MenuScene extends Phaser.Scene {
       this.makeButton(width / 2, height / 2 - 30, "JUGAR", "#e63946", () => this.startNewGame());
     }
 
+    if (this.sys.game.device.input.touch) {
+      const fullscreenBtn = this.add
+        .text(width / 2, height / 2 + (hasProgress ? 55 : 30), "PANTALLA COMPLETA", {
+          fontFamily: "Comic Sans MS, sans-serif",
+          fontSize: "13px",
+          color: "#ffffff",
+          backgroundColor: "#2b2b52",
+          padding: { x: 10, y: 5 },
+        })
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true });
+      fullscreenBtn.on("pointerover", () => fullscreenBtn.setScale(1.06));
+      fullscreenBtn.on("pointerout", () => fullscreenBtn.setScale(1));
+      fullscreenBtn.on("pointerdown", () => toggleFullscreen(this));
+    }
+
     this.add
       .text(
         width / 2,
@@ -64,22 +80,6 @@ class MenuScene extends Phaser.Scene {
         }
       )
       .setOrigin(0.5);
-
-    if (this.sys.game.device.input.touch) {
-      const fullscreenBtn = this.add
-        .text(width / 2, height - 46, "PANTALLA COMPLETA", {
-          fontFamily: "Comic Sans MS, sans-serif",
-          fontSize: "13px",
-          color: "#ffffff",
-          backgroundColor: "#2b2b52",
-          padding: { x: 10, y: 5 },
-        })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true });
-      fullscreenBtn.on("pointerover", () => fullscreenBtn.setScale(1.06));
-      fullscreenBtn.on("pointerout", () => fullscreenBtn.setScale(1));
-      fullscreenBtn.on("pointerdown", () => toggleFullscreen(this));
-    }
 
     this.add
       .text(width / 2, height - 16, "Mejor puntuación: " + save.bestScore, {
