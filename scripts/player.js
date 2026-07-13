@@ -8,6 +8,8 @@ const BOTTLE_SPEED_X = 260;
 const BOTTLE_LAUNCH_Y = 380; // impulso vertical inicial (trayectoria en arco)
 const BOTTLE_COOLDOWN = 550;
 
+const FART_COOLDOWN = 900; // ms, evita spam del humo verde
+
 class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, "playerBody");
@@ -29,6 +31,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.lastPoopTime = -Infinity;
     this.lastBottleTime = -Infinity;
+    this.lastFartTime = -Infinity;
 
     this.bottles = 3;
     this.maxBottles = 8;
@@ -146,6 +149,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     bottle.setAngularVelocity(this.facing * 320);
 
     playGameSound(this.scene, SOUND_KEYS.bottle);
+  }
+
+  canFart() {
+    return this.scene.time.now - this.lastFartTime >= FART_COOLDOWN;
+  }
+
+  // Habilidad puramente cómica: humo verde saliendo de detrás de Marlon.
+  // No hace daño ni afecta el gameplay, solo diversión.
+  fart() {
+    if (!this.canFart()) return;
+    this.lastFartTime = this.scene.time.now;
+
+    const offsetX = -this.facing * 14; // sale por detrás, no por delante
+    spawnFartCloud(this.scene, this.x + offsetX, this.y + 16);
+    playGameSound(this.scene, SOUND_KEYS.fart);
   }
 
   addBottles(amount) {

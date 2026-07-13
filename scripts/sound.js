@@ -13,6 +13,7 @@ const SOUND_KEYS = {
   gameOver: "gameOver",
   checkpoint: "checkpoint",
   victory: "victory",
+  fart: "fart",
 };
 
 function preloadGameSounds(scene) {
@@ -100,6 +101,11 @@ function playGameSound(scene, key) {
       playTone(ctx, { freq: 659, duration: 0.15, type: "square", volume: 0.13, delay: 0.15 });
       playTone(ctx, { freq: 784, duration: 0.15, type: "square", volume: 0.13, delay: 0.3 });
       playTone(ctx, { freq: 1047, duration: 0.3, type: "square", volume: 0.13, delay: 0.45 });
+      break;
+    case SOUND_KEYS.fart:
+      playTone(ctx, { freq: 120, slideTo: 55, duration: 0.13, type: "sawtooth", volume: 0.14 });
+      playTone(ctx, { freq: 95, slideTo: 45, duration: 0.11, type: "sawtooth", volume: 0.12, delay: 0.11 });
+      playTone(ctx, { freq: 75, slideTo: 35, duration: 0.15, type: "sawtooth", volume: 0.1, delay: 0.2 });
       break;
   }
 }

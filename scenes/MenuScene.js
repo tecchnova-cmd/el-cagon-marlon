@@ -55,7 +55,7 @@ class MenuScene extends Phaser.Scene {
       .text(
         width / 2,
         height / 2 + 100,
-        "← → mover   ·   ↑ / W / ESPACIO saltar\nZ lanzar caca   ·   X lanzar botella   ·   ESC pausa",
+        "← → mover   ·   ↑ / W / ESPACIO saltar\nZ lanzar caca   ·   X lanzar botella   ·   F flatulencia   ·   ESC pausa",
         {
           fontFamily: "Comic Sans MS, sans-serif",
           fontSize: "15px",

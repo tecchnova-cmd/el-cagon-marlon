@@ -26,7 +26,7 @@ class CityScene extends Phaser.Scene {
     this.createCoins();
 
     this.player = new Player(this, 80, GROUND_TOP - 60);
-    applyUpgradesToPlayer(this.player, loadSaveData().upgrades);
+    applyUpgradesToPlayer(this.player, loadSaveData());
     this.physics.add.collider(this.player, this.platforms);
     createCheckpoint(this, LEVEL_WIDTH / 2, GROUND_TOP);
 
@@ -206,7 +206,7 @@ class CityScene extends Phaser.Scene {
 
   setupInput() {
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = this.input.keyboard.addKeys("W,A,D,SPACE,Z,X");
+    this.wasd = this.input.keyboard.addKeys("W,A,D,SPACE,Z,X,F");
     setupPauseKey(this);
     createTouchControls(this);
   }
@@ -223,6 +223,9 @@ class CityScene extends Phaser.Scene {
     }
     if (Phaser.Input.Keyboard.JustDown(this.wasd.X)) {
       this.player.throwBottle(this.bottleGroup);
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.wasd.F)) {
+      this.player.fart();
     }
 
     this.groundEnemies.children.each((enemy) => enemy.update());

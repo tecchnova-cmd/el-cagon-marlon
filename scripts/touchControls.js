@@ -59,6 +59,9 @@ function createTouchControls(scene) {
   const bottleBtn = makeButton(width - 135, height - 140, "BOTELLA", 56, 11);
   bottleBtn.on("pointerdown", () => scene.player.throwBottle(scene.bottleGroup));
 
+  const fartBtn = makeButton(width - 210, height - 98, "💨", 46, 20);
+  fartBtn.on("pointerdown", () => scene.player.fart());
+
   // Pausa: mismo efecto que ESC.
   const pauseBtn = makeButton(width - 50, height - 140, "❚❚", 44, 18);
   pauseBtn.on("pointerdown", () => openPauseMenu(scene));

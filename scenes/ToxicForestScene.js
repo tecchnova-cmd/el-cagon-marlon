@@ -26,7 +26,7 @@ class ToxicForestScene extends Phaser.Scene {
     this.createCoins();
 
     this.player = new Player(this, 80, FOREST_GROUND_TOP - 60);
-    applyUpgradesToPlayer(this.player, loadSaveData().upgrades);
+    applyUpgradesToPlayer(this.player, loadSaveData());
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.trampolines, (player, pad) => this.onTrampolineBounce(player, pad));
     createCheckpoint(this, FOREST_LEVEL_WIDTH / 2, FOREST_GROUND_TOP);
@@ -239,7 +239,7 @@ class ToxicForestScene extends Phaser.Scene {
 
   setupInput() {
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = this.input.keyboard.addKeys("W,A,D,SPACE,Z,X");
+    this.wasd = this.input.keyboard.addKeys("W,A,D,SPACE,Z,X,F");
     setupPauseKey(this);
     createTouchControls(this);
   }
@@ -256,6 +256,9 @@ class ToxicForestScene extends Phaser.Scene {
     }
     if (Phaser.Input.Keyboard.JustDown(this.wasd.X)) {
       this.player.throwBottle(this.bottleGroup);
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.wasd.F)) {
+      this.player.fart();
     }
 
     this.groundEnemies.children.each((enemy) => enemy.update());

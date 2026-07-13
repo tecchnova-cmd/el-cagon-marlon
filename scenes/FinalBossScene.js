@@ -27,7 +27,7 @@ class FinalBossScene extends Phaser.Scene {
     this.createPlatforms();
 
     this.player = new Player(this, 100, ARENA_GROUND_TOP - 60);
-    applyUpgradesToPlayer(this.player, loadSaveData().upgrades);
+    applyUpgradesToPlayer(this.player, loadSaveData());
     this.physics.add.collider(this.player, this.platforms);
 
     this.poopGroup = this.physics.add.group();
@@ -148,7 +148,7 @@ class FinalBossScene extends Phaser.Scene {
 
   setupInput() {
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = this.input.keyboard.addKeys("W,A,D,SPACE,Z,X");
+    this.wasd = this.input.keyboard.addKeys("W,A,D,SPACE,Z,X,F");
     setupPauseKey(this);
     createTouchControls(this);
   }
@@ -165,6 +165,9 @@ class FinalBossScene extends Phaser.Scene {
     }
     if (Phaser.Input.Keyboard.JustDown(this.wasd.X)) {
       this.player.throwBottle(this.bottleGroup);
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.wasd.F)) {
+      this.player.fart();
     }
 
     this.groundEnemies.children.each((enemy) => enemy.update());

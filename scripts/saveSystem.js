@@ -9,6 +9,7 @@ function getDefaultSave() {
     bestScore: 0,
     coins: 0,
     upgrades: { throwSpeed: 0, poopRange: 0, extraBottle: 0, jumpHeight: 0, coinMagnet: 0 },
+    bottleStock: 0, // botellas extra compradas en la tienda, se añaden al empezar el siguiente nivel
     currentScene: "CityScene",
     hasProgress: false,
     soundEnabled: true,

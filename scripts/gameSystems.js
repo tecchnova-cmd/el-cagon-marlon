@@ -100,6 +100,27 @@ function showFloatingText(scene, x, y, text, color) {
   });
 }
 
+// ---------- FLATULENCIA ----------
+// Nube de humo verde puramente cómica: no hace daño ni empuja, solo sale
+// detrás de Marlon cuando se tira un pedo (tecla F / botón táctil).
+function spawnFartCloud(scene, x, y) {
+  for (let i = 0; i < 3; i++) {
+    scene.time.delayedCall(i * 90, () => {
+      const puff = scene.add.image(x + Phaser.Math.Between(-6, 6), y, "fartCloud").setAlpha(0.85).setScale(0.5 + i * 0.15).setDepth(9);
+      scene.tweens.add({
+        targets: puff,
+        y: y - Phaser.Math.Between(18, 34),
+        x: puff.x + Phaser.Math.Between(-10, 10),
+        scale: puff.scale + 0.5,
+        alpha: 0,
+        duration: 550,
+        ease: "Sine.easeOut",
+        onComplete: () => puff.destroy(),
+      });
+    });
+  }
+}
+
 // ---------- CHECKPOINT ----------
 // Un checkpoint por nivel: al pasarlo, Marlon reaparecerá ahí (en vez de en
 // el punto de inicio) la próxima vez que pierda una vida.
