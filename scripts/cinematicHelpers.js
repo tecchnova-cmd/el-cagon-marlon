@@ -74,6 +74,71 @@ function generateCinematicTextures(scene) {
   g.destroy();
 }
 
+// Texturas exclusivas de la cinemática de Alcantarillas (Nivel 2). Guardadas
+// aparte de generateCinematicTextures() para no depender de su guardia
+// ("cineGraffiti1"): si esa función ya se ejecutó antes (por ejemplo porque
+// el jugador ya vio la cinemática del Nivel 1 en esta sesión), su return
+// temprano nunca llegaría a generar estas.
+function generateSewerCinematicTextures(scene) {
+  if (scene.textures.exists("cineMuralSilhouette")) return;
+
+  const g = scene.make.graphics({ add: false });
+
+  // ---------- PELDAÑO DE ESCALERA METÁLICA ----------
+  g.clear();
+  g.fillStyle(0x8a8a95, 1);
+  g.fillRoundedRect(0, 0, 40, 8, 2);
+  g.fillStyle(0x5a5a62, 0.6);
+  g.fillRect(0, 5, 40, 3);
+  g.generateTexture("cineLadderRung", 40, 8);
+
+  // ---------- MURAL / GRAFITI DEL REY MALOLIENTE (silueta, no el jefe real) ----------
+  g.clear();
+  // tanque
+  g.fillStyle(0x151b18, 0.85);
+  g.fillRoundedRect(45, 10, 60, 34, 8);
+  // taza
+  g.fillRoundedRect(20, 46, 110, 70, 20);
+  g.fillStyle(0x0c100d, 0.85);
+  g.fillEllipse(75, 60, 50, 26);
+  // corona encima
+  g.fillStyle(0xffd93d, 0.9);
+  g.fillTriangle(45, 14, 55, -8, 65, 14);
+  g.fillTriangle(65, 14, 75, -14, 85, 14);
+  g.fillTriangle(85, 14, 95, -8, 105, 14);
+  g.fillRect(43, 10, 64, 8);
+  // ojos enojados
+  g.fillStyle(0xe63946, 0.95);
+  g.fillEllipse(58, 92, 16, 10);
+  g.fillEllipse(92, 92, 16, 10);
+  g.fillStyle(0x2b0a0a, 1);
+  g.fillCircle(58, 92, 3);
+  g.fillCircle(92, 92, 3);
+  // cejas enojadas
+  g.lineStyle(4, 0xe63946, 0.9);
+  g.lineBetween(48, 80, 66, 86);
+  g.lineBetween(102, 80, 84, 86);
+  g.generateTexture("cineMuralSilhouette", 150, 120);
+
+  // ---------- OJOS ROJOS EN LA OSCURIDAD ----------
+  g.clear();
+  g.fillStyle(0xff2e2e, 0.9);
+  g.fillEllipse(12, 11, 18, 12);
+  g.fillEllipse(42, 11, 18, 12);
+  g.fillStyle(0xffb3b3, 0.8);
+  g.fillCircle(9, 8, 2.4);
+  g.fillCircle(39, 8, 2.4);
+  g.generateTexture("cineRedEyePair", 54, 22);
+
+  // ---------- MOTA DE POLVO (cae con el golpe) ----------
+  g.clear();
+  g.fillStyle(0xcfc7a8, 0.8);
+  g.fillCircle(2, 2, 2);
+  g.generateTexture("cineDustMote", 4, 4);
+
+  g.destroy();
+}
+
 // ---------- BARRAS DE CINE ----------
 function showLetterboxBars(scene) {
   const { width, height } = scene.scale;

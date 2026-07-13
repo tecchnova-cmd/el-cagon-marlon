@@ -185,6 +185,10 @@ class UpgradeScene extends Phaser.Scene {
   }
 
   goToNextLevel() {
-    this.scene.start(this.nextScene);
+    if (this.nextScene === "SewerScene" && !this.save.sewerIntroSeen) {
+      this.scene.start("SewerIntroCinematic", { nextScene: "SewerScene" });
+    } else {
+      this.scene.start(this.nextScene);
+    }
   }
 }

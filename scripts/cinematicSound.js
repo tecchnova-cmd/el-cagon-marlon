@@ -141,6 +141,101 @@ function playDeepLaughWithEcho() {
   });
 }
 
+// Gota de agua: "plink" agudo y corto (goteras de la alcantarilla).
+function playWaterDrop() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 1100, slideTo: 700, duration: 0.12, type: "sine", volume: 0.06 });
+}
+
+// Golpe metálico corto (tuberías vibrando / chocando).
+function playPipeClank() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 620, duration: 0.08, type: "square", volume: 0.08 });
+  playTone(ctx, { freq: 580, duration: 0.1, type: "square", volume: 0.06, delay: 0.05 });
+}
+
+// Golpe profundo ("BOOOOM" desde las alcantarillas).
+function playDeepBoom() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 70, slideTo: 30, duration: 0.5, type: "sine", volume: 0.22 });
+  playTone(ctx, { freq: 45, slideTo: 20, duration: 0.6, type: "sawtooth", volume: 0.14, delay: 0.03 });
+}
+
+// Respiración profunda con eco (ruido filtrado, no un tono): algo respira
+// cerca de la tubería grande, justo antes de que hable la voz misteriosa.
+function playDeepBreathWithEcho() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const delay = ctx.createDelay();
+  delay.delayTime.value = 0.25;
+  const feedback = ctx.createGain();
+  feedback.gain.value = 0.35;
+  const echoVolume = ctx.createGain();
+  echoVolume.gain.value = 0.4;
+  delay.connect(feedback);
+  feedback.connect(delay);
+  delay.connect(echoVolume);
+  echoVolume.connect(ctx.destination);
+
+  const source = ctx.createBufferSource();
+  source.buffer = createNoiseBuffer(ctx, 0.7);
+  const filter = ctx.createBiquadFilter();
+  filter.type = "bandpass";
+  filter.frequency.value = 260;
+  filter.Q.value = 0.8;
+
+  const gain = ctx.createGain();
+  const t0 = ctx.currentTime;
+  gain.gain.setValueAtTime(0.0001, t0);
+  gain.gain.exponentialRampToValueAtTime(0.16, t0 + 0.25);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.7);
+
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+  gain.connect(delay);
+  source.start(t0);
+  source.stop(t0 + 0.75);
+}
+
+// Tono grave con eco, para acompañar cada línea de la voz misteriosa del
+// Rey Maloliente (no hay síntesis de voz real: mismo criterio que la risa
+// de la cinemática del Nivel 1).
+function playDeepVoiceWithEcho() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const delay = ctx.createDelay();
+  delay.delayTime.value = 0.24;
+  const feedback = ctx.createGain();
+  feedback.gain.value = 0.4;
+  const echoVolume = ctx.createGain();
+  echoVolume.gain.value = 0.45;
+  delay.connect(feedback);
+  feedback.connect(delay);
+  delay.connect(echoVolume);
+  echoVolume.connect(ctx.destination);
+
+  const t0 = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  osc.type = "sawtooth";
+  osc.frequency.setValueAtTime(85, t0);
+  osc.frequency.exponentialRampToValueAtTime(58, t0 + 0.6);
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.0001, t0);
+  gain.gain.exponentialRampToValueAtTime(0.15, t0 + 0.08);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.6);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  gain.connect(delay);
+  osc.start(t0);
+  osc.stop(t0 + 0.65);
+}
+
 // Acorde sostenido (para música ambiental / de nivel). Devuelve un handle
 // con stop() para poder detenerlo o cambiarlo por otro (crossfade manual).
 function startChordPad(freqs, volume = 0.05) {

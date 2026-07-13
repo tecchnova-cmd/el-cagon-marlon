@@ -26,6 +26,7 @@ const config = {
     MenuScene,
     CityIntroCinematic,
     CityScene,
+    SewerIntroCinematic,
     SewerScene,
     ToxicForestScene,
     LaboratoryScene,

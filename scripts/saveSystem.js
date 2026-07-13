@@ -13,6 +13,7 @@ function getDefaultSave() {
     currentScene: "CityScene",
     hasProgress: false,
     soundEnabled: true,
+    sewerIntroSeen: false, // evita repetir la cinemática del Nivel 2 en la misma partida
   };
 }
 
