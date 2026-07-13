@@ -268,8 +268,8 @@ class CityIntroCinematic extends Phaser.Scene {
     });
 
     // Diálogo 2 (dos líneas).
-    at(1400, () => showDialogue(this, "Marlon", "Qué olor tan horrible...", 1600));
-    at(1500, () => showDialogue(this, "Marlon", "...algo muy grande debe estar escondido aquí.", 2000));
+    at(3600, () => showDialogue(this, "Marlon", "Qué olor tan horrible...", 1600));
+    at(4900, () => showDialogue(this, "Marlon", "...algo muy grande debe estar escondido aquí.", 2000));
 
     // La cámara enfoca la alcantarilla gigante.
     at(1300, () => {
@@ -289,8 +289,8 @@ class CityIntroCinematic extends Phaser.Scene {
     });
 
     // Voz misteriosa.
-    at(600, () => showMysteriousLine(this, "Pronto conocerás...", 1500));
-    at(1300, () => showMysteriousLine(this, "...al Rey Maloliente...", 1800));
+    at(1900, () => showMysteriousLine(this, "Pronto conocerás...", 1500));
+    at(4900, () => showMysteriousLine(this, "...al Rey Maloliente...", 1800));
 
     // Clímax: temblor fuerte, moscas huyen, música sube y luego silencio.
     at(1400, () => {
@@ -313,7 +313,7 @@ class CityIntroCinematic extends Phaser.Scene {
 
     // Marlon mira la alcantarilla, sonríe y decide bajar.
     at(1200, () => this.marlonLookAround());
-    at(800, () => showDialogue(this, "Marlon", "Pues habrá que bajar...", 1900));
+    at(1000, () => showDialogue(this, "Marlon", "Pues habrá que bajar...", 1900));
     at(500, () => this.marlonHeroicPose());
     at(600, () => {
       this.tweenTrack(this.tweens.add({ targets: this.cameras.main, zoom: 1.1, duration: 700, ease: "Sine.easeOut" }));
@@ -321,14 +321,14 @@ class CityIntroCinematic extends Phaser.Scene {
     });
 
     // Tarjeta de objetivos.
-    at(700, () => showObjectiveLine(this, "OBJETIVO", 1000));
-    at(1000, () => showObjectiveLine(this, "Encuentra la entrada al Reino Maloliente.", 1600));
-    at(1300, () => showObjectiveLine(this, "Derrota a los enemigos.", 1200));
-    at(1000, () => showObjectiveLine(this, "Recolecta monedas.", 1200));
-    at(1000, () => showObjectiveLine(this, "Sobrevive.", 1200));
+    at(3800, () => showObjectiveLine(this, "OBJETIVO", 1000));
+    at(4900, () => showObjectiveLine(this, "Encuentra la entrada al Reino Maloliente.", 1600));
+    at(4900, () => showObjectiveLine(this, "Derrota a los enemigos.", 1200));
+    at(4900, () => showObjectiveLine(this, "Recolecta monedas.", 1200));
+    at(4900, () => showObjectiveLine(this, "Sobrevive.", 1200));
 
     // Fin: fundido a negro y arranca el nivel de verdad.
-    at(1200, () => this.finish());
+    at(4700, () => this.finish());
   }
 
   startLevelMusic() {

@@ -258,6 +258,83 @@ function playSoftThud() {
   playTone(ctx, { freq: 130, slideTo: 60, duration: 0.18, type: "sine", volume: 0.13 });
 }
 
+// Chispazo eléctrico corto (electricidad, pantallas, tubería).
+function playElectricZap() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 1800, slideTo: 2600, duration: 0.05, type: "square", volume: 0.06 });
+  playTone(ctx, { freq: 900, slideTo: 1400, duration: 0.06, type: "square", volume: 0.05, delay: 0.04 });
+}
+
+// Pitido de alarma (dos tonos alternos, tipo sirena de laboratorio).
+function playAlarmBeep() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 700, duration: 0.14, type: "square", volume: 0.07 });
+  playTone(ctx, { freq: 500, duration: 0.14, type: "square", volume: 0.07, delay: 0.16 });
+}
+
+// Blips robóticos entrecortados (voz robótica deformada del intro).
+function playRoboticBlip() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  for (let i = 0; i < 4; i++) {
+    playTone(ctx, { freq: 260 + i * 40, duration: 0.05, type: "square", volume: 0.05, delay: i * 0.07 });
+  }
+}
+
+// Interferencia / estática corta (grabación que se corta).
+function playStaticCrackle() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const source = ctx.createBufferSource();
+  source.buffer = createNoiseBuffer(ctx, 0.3);
+  const filter = ctx.createBiquadFilter();
+  filter.type = "highpass";
+  filter.frequency.value = 1200;
+  const gain = ctx.createGain();
+  const t0 = ctx.currentTime;
+  gain.gain.setValueAtTime(0.09, t0);
+  gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.3);
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+  source.start(t0);
+  source.stop(t0 + 0.32);
+}
+
+// Descarga de inodoro distante (silbido grave descendente con un poco de eco).
+function playDistantFlush() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const delay = ctx.createDelay();
+  delay.delayTime.value = 0.2;
+  const feedback = ctx.createGain();
+  feedback.gain.value = 0.3;
+  const echoVolume = ctx.createGain();
+  echoVolume.gain.value = 0.3;
+  delay.connect(feedback);
+  feedback.connect(delay);
+  delay.connect(echoVolume);
+  echoVolume.connect(ctx.destination);
+
+  const t0 = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(500, t0);
+  osc.frequency.exponentialRampToValueAtTime(90, t0 + 0.8);
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.0001, t0);
+  gain.gain.exponentialRampToValueAtTime(0.1, t0 + 0.1);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.8);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  gain.connect(delay);
+  osc.start(t0);
+  osc.stop(t0 + 0.85);
+}
+
 // Acorde sostenido (para música ambiental / de nivel). Devuelve un handle
 // con stop() para poder detenerlo o cambiarlo por otro (crossfade manual).
 function startChordPad(freqs, volume = 0.05) {

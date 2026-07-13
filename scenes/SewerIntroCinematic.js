@@ -337,7 +337,7 @@ class SewerIntroCinematic extends Phaser.Scene {
     });
 
     at(650, () => showDialogue(this, "Marlon", "Aquí abajo el olor es muchísimo peor...", 1300));
-    at(1650, () => showDialogue(this, "Marlon", "¿Quién podría vivir en un lugar como este?", 1400));
+    at(4900, () => showDialogue(this, "Marlon", "¿Quién podría vivir en un lugar como este?", 1400));
     at(1600, () => this.marlonCoverNose());
     at(300, () => this.marlonLookAround());
 
@@ -363,7 +363,7 @@ class SewerIntroCinematic extends Phaser.Scene {
       this.tweens.add({ targets: [this.muralArt, this.muralCaption], alpha: 1, duration: 500 });
     });
     at(500, () => showDialogue(this, "Marlon", "¿Rey Maloliente...?", 1200));
-    at(1650, () => showDialogue(this, "Marlon", "Pensé que era solo una leyenda.", 1400));
+    at(4900, () => showDialogue(this, "Marlon", "Pensé que era solo una leyenda.", 1400));
 
     // ---- SECUENCIA 5: La advertencia ----
     at(1650, () => {
@@ -377,12 +377,12 @@ class SewerIntroCinematic extends Phaser.Scene {
       playDeepBreathWithEcho();
       this.dimLighting();
     });
-    at(700, () => {
+    at(2550, () => {
       cam.shake(200, 0.005);
       showMysteriousLine(this, "Cada paso que das...", 1100);
       playDeepVoiceWithEcho();
     });
-    at(1300, () => {
+    at(4900, () => {
       cam.shake(180, 0.005);
       showMysteriousLine(this, "...te acerca a tu final.", 1300);
       playDeepVoiceWithEcho();
@@ -391,7 +391,7 @@ class SewerIntroCinematic extends Phaser.Scene {
     // ---- SECUENCIA 6: Los ojos ----
     at(1500, () => this.revealEyes());
     at(350, () => this.moveMarlonX(SEWER_CINE_MURAL_X - 150, 350));
-    at(450, () => showDialogue(this, "Marlon", "Creo que ya no puedo dar marcha atrás...", 1400));
+    at(3050, () => showDialogue(this, "Marlon", "Creo que ya no puedo dar marcha atrás...", 1400));
     at(1700, () => this.marlonHeroicPose());
 
     // ---- SECUENCIA 7: Inicio del nivel ----
@@ -402,13 +402,13 @@ class SewerIntroCinematic extends Phaser.Scene {
       this.moveMarlonX(SEWER_CINE_SHAFT_X, 1000);
       this.startLevelMusic();
     });
-    at(1100, () => showTitleCard(this, "NIVEL 2", "ALCANTARILLAS", 1500));
-    at(1700, () => showObjectiveLine(this, "Desciende hacia el Reino Maloliente.", 1100));
-    at(1600, () => showObjectiveLine(this, "Encuentra la salida.", 900));
-    at(1300, () => showObjectiveLine(this, "Sobrevive a las criaturas mutantes.", 1000));
-    at(1600, () => showObjectiveLine(this, "Sigue las pistas del Rey Maloliente.", 1000));
+    at(2650, () => showTitleCard(this, "NIVEL 2", "ALCANTARILLAS", 1500));
+    at(5100, () => showObjectiveLine(this, "Desciende hacia el Reino Maloliente.", 1100));
+    at(4900, () => showObjectiveLine(this, "Encuentra la salida.", 900));
+    at(4900, () => showObjectiveLine(this, "Sobrevive a las criaturas mutantes.", 1000));
+    at(4900, () => showObjectiveLine(this, "Sigue las pistas del Rey Maloliente.", 1000));
 
-    at(1400, () => this.finish());
+    at(4700, () => this.finish());
   }
 
   startLevelMusic() {

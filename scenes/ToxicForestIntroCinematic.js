@@ -328,10 +328,10 @@ class ToxicForestIntroCinematic extends Phaser.Scene {
       this.tweenTrack(this.tweens.add({ targets: cam, scrollX: 60, duration: 1300, ease: "Sine.easeInOut" }));
       this.moveMarlonX(FOREST_CINE_OBSERVE_X, 1300);
     });
-    at(2350, () => showDialogue(this, "Marlon", "Bueno... al menos aquí el aire está un poquito menos podrido.", 1700));
+    at(4900, () => showDialogue(this, "Marlon", "Bueno... al menos aquí el aire está un poquito menos podrido.", 1700));
     at(2350, () => this.passingGreenCloud());
     at(300, () => this.marlonCoverNose());
-    at(500, () => showDialogue(this, "Marlon", "...olvídenlo.", 1700));
+    at(2250, () => showDialogue(this, "Marlon", "...olvídenlo.", 1700));
 
     // ---- ESCENA 3: El árbol seco con la advertencia ----
     at(1750, () => {
@@ -340,22 +340,22 @@ class ToxicForestIntroCinematic extends Phaser.Scene {
     });
     at(1500, () => this.revealGraffiti());
     at(400, () => this.marlonLookAround());
-    at(500, () => showDialogue(this, "Marlon", "Pues que mire todo lo que quiera...", 1820));
+    at(1250, () => showDialogue(this, "Marlon", "Pues que mire todo lo que quiera...", 1820));
 
     // ---- ESCENA 4: Humor absurdo, confianza de Marlon ----
-    at(1900, () => {
+    at(4900, () => {
       this.marlonHeroicPose();
       showDialogue(this, "Marlon", "¡No voy a permitir que me quiten el título del Cagón Número Uno!", 2812);
     });
-    at(2850, () =>
+    at(4900, () =>
       showDialogue(this, "Marlon", "A mí nadie me va a obligar a usar un baño.\nA mí me gusta hacer las cosas a mi manera.", 3452)
     );
-    at(3500, () => showDialogue(this, "Marlon", "¡Yo hago mis necesidades en piscinas ajenas... y hasta en árboles de Navidad!", 3196));
+    at(4900, () => showDialogue(this, "Marlon", "¡Yo hago mis necesidades en piscinas ajenas... y hasta en árboles de Navidad!", 3196));
     at(3200, () => {
       playCrowCaw();
       this.marlonCoverNose();
     });
-    at(400, () => showDialogue(this, "Marlon", "...¿Qué?", 1700));
+    at(1700, () => showDialogue(this, "Marlon", "...¿Qué?", 1700));
 
     // ---- ESCENA 5: Silencio repentino + advertencia ----
     at(1750, () => {
@@ -367,12 +367,12 @@ class ToxicForestIntroCinematic extends Phaser.Scene {
       this.treeTremble();
       playDeepBreathWithEcho();
     });
-    at(700, () => {
+    at(2000, () => {
       cam.shake(180, 0.005);
       showMysteriousLine(this, "Sigues avanzando...", 1500);
       playDeepVoiceWithEcho();
     });
-    at(1550, () => {
+    at(4900, () => {
       cam.shake(180, 0.005);
       showMysteriousLine(this, "...pequeño impostor...", 1500);
       playDeepVoiceWithEcho();
@@ -382,20 +382,20 @@ class ToxicForestIntroCinematic extends Phaser.Scene {
     at(1550, () => this.revealEyes());
     at(600, () => this.windGustLeaves());
     at(700, () => this.marlonLookAround());
-    at(500, () => showDialogue(this, "Marlon", "Perfecto... Eso significa que voy por buen camino.", 2364));
+    at(2050, () => showDialogue(this, "Marlon", "Perfecto... Eso significa que voy por buen camino.", 2364));
 
     // ---- ESCENA 7: Inicio del nivel ----
-    at(2400, () => {
+    at(4900, () => {
       this.tweenTrack(this.tweens.add({ targets: cam, scrollX: 0, zoom: 1, duration: 1200, ease: "Sine.easeInOut" }));
       this.moveMarlonX(FOREST_CINE_OBSERVE_X, 1200);
       this.startLevelMusic();
     });
-    at(1300, () => showTitleCard(this, "NIVEL 3", "BOSQUE TÓXICO", 1900));
-    at(1950, () => showObjectiveLine(this, "Encuentra la salida.", 1300));
-    at(1450, () => showObjectiveLine(this, "Sobrevive a las criaturas mutantes.", 1300));
-    at(1900, () => showObjectiveLine(this, "Sigue las pistas del Rey Maloliente.", 1300));
+    at(5100, () => showTitleCard(this, "NIVEL 3", "BOSQUE TÓXICO", 1900));
+    at(4900, () => showObjectiveLine(this, "Encuentra la salida.", 1300));
+    at(4900, () => showObjectiveLine(this, "Sobrevive a las criaturas mutantes.", 1300));
+    at(4900, () => showObjectiveLine(this, "Sigue las pistas del Rey Maloliente.", 1300));
 
-    at(1700, () => this.finish());
+    at(4700, () => this.finish());
   }
 
   startLevelMusic() {

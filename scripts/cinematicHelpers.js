@@ -164,6 +164,104 @@ function generateForestCinematicTextures(scene) {
   g.destroy();
 }
 
+// Texturas exclusivas de la cinemática del Laboratorio (Nivel 4). Guardadas
+// aparte por el mismo motivo que generateSewerCinematicTextures /
+// generateForestCinematicTextures: su propia guardia evita que un
+// early-return de otra función se salte estas.
+function generateLabCinematicTextures(scene) {
+  if (scene.textures.exists("cineBlueprint")) return;
+
+  const g = scene.make.graphics({ add: false });
+
+  // ---------- PLANO INCOMPLETO DEL INODORO GIGANTE ----------
+  g.clear();
+  g.fillStyle(0x0a1a24, 0.92);
+  g.fillRect(0, 0, 90, 100);
+  g.lineStyle(1, 0x2fb8d9, 0.25);
+  for (let gx = 0; gx <= 90; gx += 15) g.lineBetween(gx, 0, gx, 100);
+  for (let gy = 0; gy <= 100; gy += 15) g.lineBetween(0, gy, 90, gy);
+  g.lineStyle(2, 0x5adfff, 0.9);
+  g.strokeRoundedRect(25, 10, 40, 22, 4);
+  g.beginPath();
+  g.moveTo(10, 40);
+  g.lineTo(10, 80);
+  g.lineTo(30, 92);
+  g.lineTo(60, 92);
+  g.lineTo(80, 80);
+  // (deliberadamente no se cierra el lado derecho superior: plano "incompleto")
+  g.strokePath();
+  g.lineStyle(2, 0xffd93d, 0.7);
+  g.lineBetween(30, 10, 35, 0);
+  g.lineBetween(45, 10, 45, -4);
+  g.lineBetween(60, 10, 55, 0);
+  g.fillStyle(0xff4444, 0.5);
+  g.fillCircle(35, 60, 3);
+  g.fillCircle(55, 60, 3);
+  g.generateTexture("cineBlueprint", 90, 100);
+
+  // ---------- CHISPA ----------
+  g.clear();
+  g.fillStyle(0xfff2a0, 0.95);
+  g.fillCircle(5, 5, 2);
+  g.lineStyle(2, 0xffe066, 0.9);
+  g.lineBetween(5, 0, 5, 10);
+  g.lineBetween(0, 5, 10, 5);
+  g.generateTexture("cineSpark", 10, 10);
+
+  // ---------- SILUETA HUMANA (grabación del científico) ----------
+  g.clear();
+  g.fillStyle(0x05070a, 0.92);
+  g.fillCircle(12, 8, 7);
+  g.fillRoundedRect(4, 14, 16, 22, 4);
+  g.fillRect(2, 16, 4, 16);
+  g.fillRect(18, 16, 4, 16);
+  g.fillRect(6, 34, 5, 6);
+  g.fillRect(13, 34, 5, 6);
+  g.generateTexture("cineSilhouette", 24, 40);
+
+  g.destroy();
+}
+
+// ---------- PANTALLA / DOCUMENTO TÉCNICO ----------
+// Recuadro tipo monitor con texto en varias líneas (fuente monoespaciada),
+// reutilizable por cualquier cinemática que necesite mostrar una pantalla,
+// documento o mensaje técnico. Respeta el mismo piso de lectura que
+// showDialogue/showObjectiveLine vía estimateReadDuration.
+function showScreenText(scene, x, y, lines, durationMs, options) {
+  const opts = options || {};
+  const width = opts.width || 260;
+  const lineHeight = opts.lineHeight || 20;
+  const text = Array.isArray(lines) ? lines.join("\n") : lines;
+  const effectiveDuration = estimateReadDuration(text, Math.max(durationMs || 0, 5000));
+  const lineCount = text.split("\n").length;
+  const height = lineHeight * lineCount + 26;
+
+  const bg = scene.add
+    .rectangle(x, y, width, height, 0x02131a, 0.88)
+    .setStrokeStyle(2, 0x2fb8d9, 0.85)
+    .setDepth(140)
+    .setAlpha(0);
+  const label = scene.add
+    .text(x, y, text, {
+      fontFamily: "monospace",
+      fontSize: opts.fontSize || "13px",
+      color: opts.color || "#5adfff",
+      align: "center",
+      lineSpacing: 4,
+    })
+    .setOrigin(0.5)
+    .setDepth(141)
+    .setAlpha(0);
+
+  const items = [bg, label];
+  scene.tweens.add({ targets: items, alpha: 1, duration: 300 });
+  scene.time.delayedCall(Math.max(0, effectiveDuration - 300), () => {
+    scene.tweens.add({ targets: items, alpha: 0, duration: 300, onComplete: () => items.forEach((i) => i.destroy()) });
+  });
+
+  return items;
+}
+
 // ---------- BARRAS DE CINE ----------
 function showLetterboxBars(scene) {
   const { width, height } = scene.scale;
@@ -188,12 +286,14 @@ function hideLetterboxBars(scene, bars, duration = 500) {
   scene.tweens.add({ targets: bars.bottom, y: height + 30, duration, ease: "Cubic.easeIn" });
 }
 
-// Tiempo mínimo en pantalla para que un texto pueda leerse con calma: una
-// base fija más un margen por cada carácter (lectura ~31 caracteres/seg).
+// Tiempo mínimo en pantalla para que un texto pueda leerse con calma: cada
+// función de texto de abajo pide un piso de ~5 segundos (a petición
+// explícita, para todas las cinemáticas pasadas y futuras); si el texto es
+// muy largo, el margen por carácter puede alargarlo todavía más.
 // Todas las funciones de texto de abajo usan esto como PISO: si la escena
-// pide menos tiempo del que hace falta para leer la frase, se usa este valor
-// más largo en su lugar. Aplica automáticamente a todas las cinemáticas
-// (actuales y futuras) que reutilicen estas funciones.
+// pide menos tiempo del que hace falta, se usa este valor más largo en su
+// lugar. Aplica automáticamente a todas las cinemáticas que reutilicen
+// estas funciones.
 function estimateReadDuration(text, minMs) {
   const chars = (text || "").replace(/\n/g, " ").length;
   const estimated = 700 + chars * 32;
@@ -203,7 +303,7 @@ function estimateReadDuration(text, minMs) {
 // ---------- DIÁLOGOS ----------
 // Caja inferior con nombre del hablante (para las líneas de Marlon).
 function showDialogue(scene, speaker, text, durationMs) {
-  durationMs = estimateReadDuration(text, Math.max(durationMs, 1700));
+  durationMs = estimateReadDuration(text, Math.max(durationMs, 5000));
   const { width, height } = scene.scale;
   const y = height - 90;
 
@@ -242,7 +342,7 @@ function showDialogue(scene, speaker, text, durationMs) {
 // Línea "misteriosa" (la voz del Rey Maloliente): centrada, sin nombre, con
 // tinte verdoso y un pequeño temblor para diferenciarla del diálogo normal.
 function showMysteriousLine(scene, text, durationMs) {
-  durationMs = estimateReadDuration(text, Math.max(durationMs, 1500));
+  durationMs = estimateReadDuration(text, Math.max(durationMs, 5000));
   const { width, height } = scene.scale;
   const label = scene.add
     .text(width / 2, height / 2 - 20, text, {
@@ -276,7 +376,7 @@ function showMysteriousLine(scene, text, durationMs) {
 
 // ---------- TARJETAS DE TEXTO (título / objetivo) ----------
 function showTitleCard(scene, title, subtitle, durationMs) {
-  durationMs = estimateReadDuration(title + " " + (subtitle || ""), Math.max(durationMs, 1900));
+  durationMs = estimateReadDuration(title + " " + (subtitle || ""), Math.max(durationMs, 5200));
   const { width, height } = scene.scale;
   const items = [];
 
@@ -319,7 +419,7 @@ function showTitleCard(scene, title, subtitle, durationMs) {
 }
 
 function showObjectiveLine(scene, text, durationMs) {
-  durationMs = estimateReadDuration(text, Math.max(durationMs, 1300));
+  durationMs = estimateReadDuration(text, Math.max(durationMs, 5000));
   const { width, height } = scene.scale;
   const label = scene.add
     .text(width / 2, height / 2 + 60, text, {

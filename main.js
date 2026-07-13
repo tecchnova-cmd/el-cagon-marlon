@@ -30,6 +30,7 @@ const config = {
     SewerScene,
     ToxicForestIntroCinematic,
     ToxicForestScene,
+    LaboratoryIntroCinematic,
     LaboratoryScene,
     CastleScene,
     FinalBossScene,
