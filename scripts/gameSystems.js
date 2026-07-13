@@ -32,6 +32,24 @@ function requestFullscreenIfMobile(scene) {
   }
 }
 
+// Botón explícito "PANTALLA COMPLETA": los navegadores solo permiten pedir
+// fullscreen desde un gesto directo del usuario, así que cuando el jugador
+// sale de la app (cambia de app, bloquea el celular, etc.) y vuelve, el modo
+// fullscreen se pierde y ya no se puede recuperar automáticamente. Este
+// botón (en el menú y en la pausa) le da al jugador una forma manual de
+// volver a activarlo.
+function toggleFullscreen(scene) {
+  try {
+    if (scene.scale.isFullscreen) {
+      scene.scale.stopFullscreen();
+    } else {
+      scene.scale.startFullscreen();
+    }
+  } catch (e) {
+    // Algunos navegadores lo bloquean; el juego sigue funcionando igual.
+  }
+}
+
 function trackCoinCollected(scene) {
   scene.registry.set("coinsCollected", (scene.registry.get("coinsCollected") || 0) + 1);
   scene.registry.set("coinsWallet", (scene.registry.get("coinsWallet") || 0) + 1);

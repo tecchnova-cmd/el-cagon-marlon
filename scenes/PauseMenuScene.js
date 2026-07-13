@@ -42,6 +42,9 @@ class PauseMenuScene extends Phaser.Scene {
     this.buildButton(width / 2, 236, "REINICIAR NIVEL", () => this.restartLevel());
     this.soundLabel = this.buildButton(width / 2, 282, this.soundButtonText(), () => this.toggleSound());
     this.buildButton(width / 2, 328, "MENÚ PRINCIPAL", () => this.goToMenu());
+    if (this.sys.game.device.input.touch) {
+      this.buildButton(width / 2, 374, "PANTALLA COMPLETA", () => toggleFullscreen(this));
+    }
 
     this.input.keyboard.once("keydown-ESC", () => this.resumeGame());
   }
