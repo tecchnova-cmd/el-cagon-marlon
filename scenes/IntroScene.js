@@ -41,8 +41,8 @@ class IntroScene extends Phaser.Scene {
     });
 
     const story =
-      "Marlon está borracho y necesita cagar YA... ¡pero el Rey Inodoro se ha adueñado de todos los baños del reino!\n\n" +
-      "Ayúdalo a derrotar al Rey Inodoro para que los baños dejen de existir de una vez, y Marlon pueda cagar donde le dé la gana.\n\n" +
+      "Marlon está borracho y necesita cagar YA... ¡pero el Rey Maloliente se ha adueñado de todos los baños del reino!\n\n" +
+      "Ayúdalo a derrotar al Rey Maloliente para que los baños dejen de existir de una vez, y Marlon pueda cagar donde le dé la gana.\n\n" +
       "Usa la caca y las botellas de cerveza para derrotar a tus enemigos por el camino.";
 
     this.add
