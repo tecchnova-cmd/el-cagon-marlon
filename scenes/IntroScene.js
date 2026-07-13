@@ -76,5 +76,21 @@ class IntroScene extends Phaser.Scene {
 
     this.input.keyboard.once("keydown-SPACE", () => this.scene.start("MenuScene"));
     this.input.keyboard.once("keydown-ENTER", () => this.scene.start("MenuScene"));
+
+    if (this.sys.game.device.input.touch) {
+      const fullscreenBtn = this.add
+        .text(width / 2, height - 20, "PANTALLA COMPLETA", {
+          fontFamily: "Comic Sans MS, sans-serif",
+          fontSize: "13px",
+          color: "#ffffff",
+          backgroundColor: "#2b2b52",
+          padding: { x: 10, y: 5 },
+        })
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true });
+      fullscreenBtn.on("pointerover", () => fullscreenBtn.setScale(1.06));
+      fullscreenBtn.on("pointerout", () => fullscreenBtn.setScale(1));
+      fullscreenBtn.on("pointerdown", () => toggleFullscreen(this));
+    }
   }
 }
