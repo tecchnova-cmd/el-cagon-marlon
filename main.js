@@ -28,6 +28,7 @@ const config = {
     CityScene,
     SewerIntroCinematic,
     SewerScene,
+    ToxicForestIntroCinematic,
     ToxicForestScene,
     LaboratoryScene,
     CastleScene,

@@ -236,6 +236,28 @@ function playDeepVoiceWithEcho() {
   osc.stop(t0 + 0.65);
 }
 
+// Canto de pájaro: dos notas cortas y agudas.
+function playBirdChirp() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 2200, slideTo: 2800, duration: 0.06, type: "sine", volume: 0.05 });
+  playTone(ctx, { freq: 2000, slideTo: 2500, duration: 0.07, type: "sine", volume: 0.04, delay: 0.09 });
+}
+
+// Graznido de cuervo: tono grave y áspero, corto.
+function playCrowCaw() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 340, slideTo: 200, duration: 0.16, type: "sawtooth", volume: 0.1 });
+}
+
+// Golpe suave (Marlon aterriza al caer de la tubería): más ligero que playDeepBoom.
+function playSoftThud() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  playTone(ctx, { freq: 130, slideTo: 60, duration: 0.18, type: "sine", volume: 0.13 });
+}
+
 // Acorde sostenido (para música ambiental / de nivel). Devuelve un handle
 // con stop() para poder detenerlo o cambiarlo por otro (crossfade manual).
 function startChordPad(freqs, volume = 0.05) {

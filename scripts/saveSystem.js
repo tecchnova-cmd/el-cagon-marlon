@@ -14,6 +14,7 @@ function getDefaultSave() {
     hasProgress: false,
     soundEnabled: true,
     sewerIntroSeen: false, // evita repetir la cinemática del Nivel 2 en la misma partida
+    forestIntroSeen: false, // evita repetir la cinemática del Nivel 3 en la misma partida
   };
 }
 

@@ -139,6 +139,31 @@ function generateSewerCinematicTextures(scene) {
   g.destroy();
 }
 
+// Texturas exclusivas de la cinemática del Bosque Tóxico (Nivel 3). Guardadas
+// aparte por el mismo motivo que generateSewerCinematicTextures: su propia
+// guardia evita que un early-return de otra función se salte estas.
+function generateForestCinematicTextures(scene) {
+  if (scene.textures.exists("cineFirefly")) return;
+
+  const g = scene.make.graphics({ add: false });
+
+  // ---------- LUCIÉRNAGA ----------
+  g.clear();
+  g.fillStyle(0xd4ff5a, 0.25);
+  g.fillCircle(5, 5, 5);
+  g.fillStyle(0xe8ff9a, 0.95);
+  g.fillCircle(5, 5, 2);
+  g.generateTexture("cineFirefly", 10, 10);
+
+  // ---------- HUELLA PEQUEÑA ----------
+  g.clear();
+  g.fillStyle(0x3a2f1a, 0.55);
+  g.fillEllipse(5, 3, 8, 5);
+  g.generateTexture("cineFootprint", 10, 6);
+
+  g.destroy();
+}
+
 // ---------- BARRAS DE CINE ----------
 function showLetterboxBars(scene) {
   const { width, height } = scene.scale;
@@ -163,9 +188,22 @@ function hideLetterboxBars(scene, bars, duration = 500) {
   scene.tweens.add({ targets: bars.bottom, y: height + 30, duration, ease: "Cubic.easeIn" });
 }
 
+// Tiempo mínimo en pantalla para que un texto pueda leerse con calma: una
+// base fija más un margen por cada carácter (lectura ~31 caracteres/seg).
+// Todas las funciones de texto de abajo usan esto como PISO: si la escena
+// pide menos tiempo del que hace falta para leer la frase, se usa este valor
+// más largo en su lugar. Aplica automáticamente a todas las cinemáticas
+// (actuales y futuras) que reutilicen estas funciones.
+function estimateReadDuration(text, minMs) {
+  const chars = (text || "").replace(/\n/g, " ").length;
+  const estimated = 700 + chars * 32;
+  return Math.max(minMs, estimated);
+}
+
 // ---------- DIÁLOGOS ----------
 // Caja inferior con nombre del hablante (para las líneas de Marlon).
 function showDialogue(scene, speaker, text, durationMs) {
+  durationMs = estimateReadDuration(text, Math.max(durationMs, 1700));
   const { width, height } = scene.scale;
   const y = height - 90;
 
@@ -204,6 +242,7 @@ function showDialogue(scene, speaker, text, durationMs) {
 // Línea "misteriosa" (la voz del Rey Maloliente): centrada, sin nombre, con
 // tinte verdoso y un pequeño temblor para diferenciarla del diálogo normal.
 function showMysteriousLine(scene, text, durationMs) {
+  durationMs = estimateReadDuration(text, Math.max(durationMs, 1500));
   const { width, height } = scene.scale;
   const label = scene.add
     .text(width / 2, height / 2 - 20, text, {
@@ -237,6 +276,7 @@ function showMysteriousLine(scene, text, durationMs) {
 
 // ---------- TARJETAS DE TEXTO (título / objetivo) ----------
 function showTitleCard(scene, title, subtitle, durationMs) {
+  durationMs = estimateReadDuration(title + " " + (subtitle || ""), Math.max(durationMs, 1900));
   const { width, height } = scene.scale;
   const items = [];
 
@@ -279,6 +319,7 @@ function showTitleCard(scene, title, subtitle, durationMs) {
 }
 
 function showObjectiveLine(scene, text, durationMs) {
+  durationMs = estimateReadDuration(text, Math.max(durationMs, 1300));
   const { width, height } = scene.scale;
   const label = scene.add
     .text(width / 2, height / 2 + 60, text, {
