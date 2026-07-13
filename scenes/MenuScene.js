@@ -157,7 +157,7 @@ class MenuScene extends Phaser.Scene {
 
   startNewGame() {
     this.resetRunStats(loadSaveData().coins);
-    this.scene.start("CityScene");
+    this.scene.start("CityIntroCinematic", { nextScene: "CityScene" });
   }
 
   continueGame(save) {
